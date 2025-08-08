@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: abhipatel2002/flask-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 5000
+
+env:
+  PGDB_HOST: "postgresql.db.svc.cluster.local"
+  PGDB_USER: "myuser"
+  PGDB_PASSWORD: "mypassword"
+  PGDB_NAME: "mydb"
+  REDIS_HOST: "redis.redis.svc.cluster.local"

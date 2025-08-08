@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  namespace: app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+        - name: flask-app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PGDB_HOST
+              value: {{ .Values.env.PGDB_HOST | quote }}
+            - name: PGDB_USER
+              value: {{ .Values.env.PGDB_USER | quote }}
+            - name: PGDB_PASSWORD
+              value: {{ .Values.env.PGDB_PASSWORD | quote }}
+            - name: PGDB_NAME
+              value: {{ .Values.env.PGDB_NAME | quote }}
+            - name: REDIS_HOST
+              value: {{ .Values.env.REDIS_HOST | quote }}
